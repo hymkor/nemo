@@ -11,7 +11,7 @@ import (
 	"github.com/nyaosorg/go-ttyadapter"
 
 	"github.com/hymkor/go-generics-list"
-	"github.com/hymkor/jegan/internal/ansi"
+	"github.com/hymkor/nemo/internal/ansi"
 )
 
 type EventResult int
