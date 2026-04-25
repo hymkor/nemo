@@ -8,8 +8,9 @@ import (
 
 	"github.com/hymkor/go-generics-list"
 
-	"github.com/hymkor/jegan/internal/nonblock"
-	"github.com/hymkor/jegan/internal/pager"
+	"github.com/hymkor/nemo/pager"
+
+	"github.com/hymkor/nemo/internal/nonblock"
 )
 
 type Displayer = pager.Displayer
