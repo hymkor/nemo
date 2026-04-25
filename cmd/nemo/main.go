@@ -14,9 +14,9 @@ import (
 
 	"github.com/hymkor/go-generics-list"
 
-	"github.com/hymkor/jegan/internal/ansi"
-	"github.com/hymkor/jegan/internal/asyncpager"
-	"github.com/hymkor/jegan/internal/pager"
+	"github.com/hymkor/nemo/asyncpager"
+	"github.com/hymkor/nemo/internal/ansi"
+	"github.com/hymkor/nemo/pager"
 )
 
 type textElement string
