@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"github.com/mattn/go-colorable"
-	"github.com/mattn/go-runewidth"
 
 	"github.com/nyaosorg/go-ttyadapter/tty8pe"
 
@@ -26,7 +25,7 @@ func (t textElement) Display(w int) string {
 	for {
 		i := strings.IndexByte(s, '\t')
 		if i < 0 {
-			return runewidth.Truncate(s, w-1, "")
+			return s + "\x1B[0m"
 		}
 		s = s[:i] + "    "[i%4:] + s[i+1:]
 	}
