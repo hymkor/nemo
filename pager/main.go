@@ -193,6 +193,10 @@ func (session *Session[T]) MovePrevLine() {
 	}
 }
 
+func (session *Session[T]) ClearCache() {
+	session.Pager.cache = session.Pager.cache[:0]
+}
+
 func (session *Session[T]) EventLoop() error {
 	session.Window = session.List.Front()
 
@@ -226,6 +230,8 @@ func (session *Session[T]) EventLoop() error {
 			}
 		}
 		switch key {
+		case keys.CtrlL:
+			session.ClearCache()
 		case "<":
 			session.MoveFront()
 		case ">":
