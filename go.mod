@@ -6,7 +6,7 @@ require (
 	github.com/hymkor/go-generics-list v0.2.3
 	github.com/mattn/go-colorable v0.1.14
 	github.com/mattn/go-runewidth v0.0.23
-	github.com/nyaosorg/go-readline-ny v1.14.3
+	github.com/nyaosorg/go-readline-ny v1.15.0
 	github.com/nyaosorg/go-ttyadapter v0.6.0
 )
 
