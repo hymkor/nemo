@@ -1,6 +1,10 @@
 Changelog
 =========
 
+v0.3.0
+------
+Apr 28, 2026
+
 - Add Ctrl-L to redraw the screen (#4)
 - Add Session.ClearCache to force re-rendering (#4)
 
