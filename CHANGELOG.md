@@ -1,7 +1,14 @@
 Changelog
 =========
 
+v0.2.0
+-------
+Apr 27, 2026
+
 - Fix: nemo CLI ignored the first entered key (#2)
+- Update "mattn/go-tty" to v2.0.0
+- Update "nyaosorg/go-ttyadapter" to v0.6.0
+- Update "nyaosorg/go-readline-ny" to v1.15.0
 
 v0.1.0
 ------
