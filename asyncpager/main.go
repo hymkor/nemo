@@ -88,7 +88,9 @@ func (pg *Pager[T]) EventLoop(
 			break
 		}
 		i++
-		if i >= session.Pager.ContentHeight {
+		// Not to set session.tail nil,
+		// continue even when i == session.Pager.ContentHeight
+		if i > session.Pager.ContentHeight {
 			newTtyX1 := newTtyX(tty, getter, newStore)
 			session.GetKey = newTtyX1.GetKey
 			defer newTtyX1.Close()
