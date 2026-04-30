@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime"
 	"strings"
 
 	"github.com/mattn/go-colorable"
+	"github.com/mattn/go-isatty"
 
 	"github.com/nyaosorg/go-ttyadapter/tty8pe"
 
@@ -85,6 +87,9 @@ func main1(source io.Reader, title string) error {
 
 func Run(args []string) error {
 	if len(args) < 1 {
+		if isatty.IsTerminal(os.Stdin.Fd()) {
+			return fmt.Errorf("Nemo %s-%s-%s", version, runtime.GOOS, runtime.GOARCH)
+		}
 		return main1(os.Stdin, "<STDIN>")
 	}
 	fd, err := os.Open(args[0])
