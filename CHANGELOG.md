@@ -1,6 +1,8 @@
 Changelog
 =========
 
+- Application now shutdowns immediately when no files are specified and standard input is not redirected (#6)
+
 v0.3.0
 ------
 Apr 28, 2026
