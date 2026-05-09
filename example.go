@@ -8,7 +8,7 @@ import (
 
 	"github.com/mattn/go-colorable"
 
-	"github.com/nyaosorg/go-ttyadapter/tty8pe"
+	"github.com/nyaosorg/go-ttyadapter/fav"
 
 	"github.com/hymkor/go-generics-list"
 	"github.com/hymkor/nemo/pager"
@@ -38,7 +38,7 @@ func main() {
 	}
 	// Run pager event loop
 	err := pg.EventLoop(
-		&tty8pe.Tty{},                  // terminal input
+		new(fav.Tty),                   // terminal input
 		lines,                          // data source
 		colorable.NewColorableStdout()) // output
 
