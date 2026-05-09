@@ -2,6 +2,7 @@ Changelog
 =========
 
 - EventLoop methods: Open/Close TTY only when not already opened (#8)
+- Use "go-ttyadapter/fav" instead of "go-ttyadapter/tty8pe" (#9)
 
 v0.3.1
 ------

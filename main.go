@@ -11,7 +11,7 @@ import (
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
 
-	"github.com/nyaosorg/go-ttyadapter/tty8pe"
+	"github.com/nyaosorg/go-ttyadapter/fav"
 
 	"github.com/hymkor/go-generics-list"
 
@@ -78,7 +78,7 @@ func main1(source io.Reader, title string) error {
 	}
 
 	return pg.EventLoop(
-		&tty8pe.Tty{},
+		new(fav.Tty),
 		getter,
 		store,
 		lines,
