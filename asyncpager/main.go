@@ -57,10 +57,12 @@ func (pg *Pager[T]) EventLoop(
 		Pager:  (*pager.Pager[T])(pg),
 	}
 
-	if err := tty.Open(nil); err != nil {
-		return err
+	if !tty.IsOpen() {
+		if err := tty.Open(nil); err != nil {
+			return err
+		}
+		defer tty.Close()
 	}
-	defer tty.Close()
 
 	width, height, err := tty.Size()
 	if err != nil {
