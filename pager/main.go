@@ -261,10 +261,12 @@ func (session *Session[T]) EventLoop() error {
 }
 
 func (pager *Pager[T]) EventLoop(tty ttyadapter.Tty, L *list.List[T], ttyout io.Writer) error {
-	if err := tty.Open(nil); err != nil {
-		return err
+	if !tty.IsOpen() {
+		if err := tty.Open(nil); err != nil {
+			return err
+		}
+		defer tty.Close()
 	}
-	defer tty.Close()
 
 	width, height, err := tty.Size()
 	if err != nil {

@@ -1,6 +1,8 @@
 Changelog
 =========
 
+- EventLoop methods: Open/Close TTY only when not already opened (#8)
+
 v0.3.1
 ------
 Apr 30, 2026
