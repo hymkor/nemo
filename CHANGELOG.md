@@ -2,6 +2,7 @@ Changelog
 =========
 
 - Add options: `-strip-cr` and `-show-control` (#11)
+- Display U+2400 - U+241F symbols for control characters (default) (#12)
 
 v0.3.2
 ------
