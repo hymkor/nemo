@@ -70,6 +70,8 @@ func (app *Application) main1(source io.Reader, title string) error {
 					}
 				}
 				text = buffer.String()
+			} else if app.StripCr {
+				text = strings.ReplaceAll(text, "\r", "")
 			}
 			return textElement(text), nil
 		}
@@ -101,6 +103,7 @@ func (app *Application) main1(source io.Reader, title string) error {
 
 type Application struct {
 	ShowControl bool
+	StripCr     bool
 }
 
 func (app *Application) Run(args []string) error {
