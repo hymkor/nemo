@@ -1,6 +1,8 @@
 Changelog
 =========
 
+- Add options: `-strip-cr` and `-show-control` (#11)
+
 v0.3.2
 ------
 May 10, 2026
