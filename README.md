@@ -125,7 +125,7 @@ nemo/
 ├── cmd/nemo        # CLI entry point
 ├── pager           # core pager
 ├── asyncpager      # async extension
-└── (root)          # Run() entry
+└── (root)          # Application.Run() entry
 ```
 
 Design Notes
@@ -134,7 +134,7 @@ Design Notes
 - `pager` is minimal and synchronous
 - `asyncpager` adds concurrency without changing the core interface
 - `Display(width)` gives full control over rendering
-- `nemo.Run()` provides a simple integration point for applications
+- `(*Application) Run()` provides a simple integration point for applications
 
 License
 -------
