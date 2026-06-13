@@ -76,6 +76,8 @@ func main1(source io.Reader, title string) error {
 		//}
 		return true
 	}
+	c := colorable.EnableColorsStdout(nil)
+	defer c()
 
 	return pg.EventLoop(
 		new(fav.Tty),
