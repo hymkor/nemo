@@ -58,11 +58,11 @@ func (app *Application) main1(source io.Reader, title string) error {
 		},
 	}
 
-	sc := bufio.NewScanner(source)
+	br := bufio.NewReader(source)
 
 	getter := func() (textElement, error) {
-		if sc.Scan() {
-			text := sc.Text()
+		text, err := br.ReadString('\n')
+		if err == nil || err == io.EOF {
 			if app.ShowControl {
 				var buffer strings.Builder
 				for _, c := range text {
@@ -74,18 +74,16 @@ func (app *Application) main1(source io.Reader, title string) error {
 				}
 				text = buffer.String()
 			} else if app.StripCr {
+				text = strings.ReplaceAll(text, "\n", "")
 				text = strings.ReplaceAll(text, "\r", "")
 			} else {
 				text = rxSymbol.ReplaceAllStringFunc(text, func(s string) string {
 					return string(rune(0x2400 + int(s[0])))
 				})
 			}
-			return textElement(text), nil
+			return textElement(text), err
 		}
-		if err := sc.Err(); err != nil {
-			return "", err
-		}
-		return "", io.EOF
+		return "", err
 	}
 
 	store := func(obj textElement, err error) bool {
