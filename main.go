@@ -102,8 +102,8 @@ func (app *Application) main1(source io.Reader, title string) error {
 }
 
 type Application struct {
-	ShowControl bool
-	StripCr     bool
+	ShowControl bool `flag:"show-control,display control characters as \\xNN"`
+	StripCr     bool `flag:"strip-cr,remove carriage returns"`
 }
 
 func (app *Application) Run(args []string) error {

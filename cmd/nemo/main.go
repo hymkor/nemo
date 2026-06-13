@@ -5,21 +5,16 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/hymkor/struct2flag"
+
 	"github.com/hymkor/nemo"
 )
 
-var (
-	flagShowControl = flag.Bool("show-control", false, "display control characters as \\xNN")
-	flagStripCr     = flag.Bool("strip-cr", false, "remove carriage returns")
-)
-
 func main() {
-	flag.Parse()
+	var app nemo.Application
 
-	app := &nemo.Application{
-		ShowControl: *flagShowControl,
-		StripCr:     *flagStripCr,
-	}
+	struct2flag.BindDefault(&app)
+	flag.Parse()
 	if err := app.Run(flag.Args()); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
