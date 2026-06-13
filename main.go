@@ -33,7 +33,7 @@ func (t textElement) Display(w int) string {
 	}
 }
 
-func main1(source io.Reader, title string) error {
+func (app *Application) main1(source io.Reader, title string) error {
 	lines := list.New[textElement]()
 
 	pg := &asyncpager.Pager[textElement]{
@@ -59,7 +59,21 @@ func main1(source io.Reader, title string) error {
 
 	getter := func() (textElement, error) {
 		if sc.Scan() {
-			return textElement(sc.Text()), nil
+			text := sc.Text()
+			if app.ShowControl {
+				var buffer strings.Builder
+				for _, c := range text {
+					if c < 0x20 {
+						fmt.Fprintf(&buffer, "\\x%02X", c)
+					} else {
+						buffer.WriteRune(c)
+					}
+				}
+				text = buffer.String()
+			} else if app.StripCr {
+				text = strings.ReplaceAll(text, "\r", "")
+			}
+			return textElement(text), nil
 		}
 		if err := sc.Err(); err != nil {
 			return "", err
@@ -76,6 +90,8 @@ func main1(source io.Reader, title string) error {
 		//}
 		return true
 	}
+	c := colorable.EnableColorsStdout(nil)
+	defer c()
 
 	return pg.EventLoop(
 		new(fav.Tty),
@@ -85,17 +101,22 @@ func main1(source io.Reader, title string) error {
 		colorable.NewColorableStdout())
 }
 
-func Run(args []string) error {
+type Application struct {
+	ShowControl bool `flag:"show-control,display control characters as \\xNN"`
+	StripCr     bool `flag:"strip-cr,remove carriage returns"`
+}
+
+func (app *Application) Run(args []string) error {
 	if len(args) < 1 {
 		if isatty.IsTerminal(os.Stdin.Fd()) {
 			return fmt.Errorf("Nemo %s-%s-%s", version, runtime.GOOS, runtime.GOARCH)
 		}
-		return main1(os.Stdin, "<STDIN>")
+		return app.main1(os.Stdin, "<STDIN>")
 	}
 	fd, err := os.Open(args[0])
 	if err != nil {
 		return err
 	}
 	defer fd.Close()
-	return main1(fd, args[0])
+	return app.main1(fd, args[0])
 }
