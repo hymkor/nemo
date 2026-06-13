@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"regexp"
 	"runtime"
 	"strings"
 
@@ -32,6 +33,8 @@ func (t textElement) Display(w int) string {
 		s = s[:i] + "    "[i%4:] + s[i+1:]
 	}
 }
+
+var rxSymbol = regexp.MustCompile("[\x00-\x08\x0A-\x1A\x1C-\x1F]")
 
 func (app *Application) main1(source io.Reader, title string) error {
 	lines := list.New[textElement]()
@@ -72,6 +75,10 @@ func (app *Application) main1(source io.Reader, title string) error {
 				text = buffer.String()
 			} else if app.StripCr {
 				text = strings.ReplaceAll(text, "\r", "")
+			} else {
+				text = rxSymbol.ReplaceAllStringFunc(text, func(s string) string {
+					return string(rune(0x2400 + int(s[0])))
+				})
 			}
 			return textElement(text), nil
 		}
