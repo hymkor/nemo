@@ -1,6 +1,10 @@
 Changelog
 =========
 
+v0.4.0
+------
+Jun 14, 2026
+
 - Add options: `-strip-cr` and `-show-control` (#11)
 - Display U+2400 - U+241F symbols for control characters (default) (#12)
 
