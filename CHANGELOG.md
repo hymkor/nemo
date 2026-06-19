@@ -1,6 +1,11 @@
 Changelog
 =========
 
+- Improve handling of non-UTF-8 input (#14)
+  - Attempt to decode invalid UTF-8 using the current system encoding
+  - If decoding fails, preserve printable ASCII (`0x20`–`0x7E`) and
+    display all other bytes as `\xNN`
+
 v0.4.0
 ------
 Jun 14, 2026
