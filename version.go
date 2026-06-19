@@ -1,3 +1,3 @@
 package nemo
 
-var version = "v0.4.0-goinstall"
+var version = "v0.5.0-goinstall"
