@@ -10,6 +10,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.23
 	github.com/nyaosorg/go-readline-ny v1.15.1
 	github.com/nyaosorg/go-ttyadapter v0.7.0
+	github.com/nyaosorg/go-windows-mbcs v0.4.4
 )
 
 require (
@@ -17,4 +18,5 @@ require (
 	github.com/mattn/go-tty v0.0.7 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/term v0.25.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 )

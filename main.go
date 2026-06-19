@@ -8,11 +8,13 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
 
 	"github.com/nyaosorg/go-ttyadapter/fav"
+	"github.com/nyaosorg/go-windows-mbcs"
 
 	"github.com/hymkor/go-generics-list"
 
@@ -34,7 +36,17 @@ func (t textElement) Display(w int) string {
 	}
 }
 
-var rxSymbol = regexp.MustCompile("[\x00-\x08\x0A-\x1A\x1C-\x1F]")
+var (
+	rxSymbol   = regexp.MustCompile("[\x00-\x08\x0A-\x1A\x1C-\x1F]")
+	rxNonLatin = regexp.MustCompile("[^\x20-\x7E]")
+)
+
+func latinToUtf8(line []byte) string {
+	line = rxNonLatin.ReplaceAllFunc(line, func(b []byte) []byte {
+		return []byte(fmt.Sprintf("\\x%02X", b[0]))
+	})
+	return string(line)
+}
 
 func (app *Application) main1(source io.Reader, title string) error {
 	lines := list.New[textElement]()
@@ -60,9 +72,21 @@ func (app *Application) main1(source io.Reader, title string) error {
 
 	br := bufio.NewReader(source)
 
+	mayBeUtf8 := true
 	getter := func() (textElement, error) {
-		text, err := br.ReadString('\n')
+		line, err := br.ReadBytes('\n')
 		if err == nil || err == io.EOF {
+			var text string
+			if mayBeUtf8 && utf8.Valid(line) {
+				text = string(line)
+			} else {
+				text, err = mbcs.AnsiToUtf8(line, mbcs.ACP)
+				if err != nil {
+					text = latinToUtf8(line)
+				} else {
+					mayBeUtf8 = false
+				}
+			}
 			if app.ShowControl {
 				var buffer strings.Builder
 				for _, c := range text {
